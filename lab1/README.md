@@ -6,6 +6,7 @@
 **Class:** BSE-5A  
 **Subject:** CC  
 
+[View Lab 1 Report](lab1/Lab1-Report.pdf)
 ---
 
 ## Table of Contents
@@ -140,5 +141,8 @@ For troubleshooting or learning more:
 
 ## Lab Status
 Lab 1 completed successfully.
+
+
+
 
     
