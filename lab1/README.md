@@ -6,7 +6,7 @@
 **Class:** BSE-5A  
 **Subject:** CC  
 
-[View Lab 1 Report](lab1/Lab1-Report.pdf)
+[View Lab 1 Report](Lab1-Report.pdf)
 ---
 
 ## Table of Contents
