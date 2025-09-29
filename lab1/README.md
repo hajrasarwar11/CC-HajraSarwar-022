@@ -6,7 +6,7 @@
 **Class:** BSE-5A  
 **Subject:** CC  
 
-[📄 View Lab 1 Report](lab1/Lab1-Report.pdf)
+[📄 View Lab 1 Report](Lab1-Report.pdf)
 
 ---
 
@@ -134,4 +134,5 @@ Replace `<username>` with your username and `<ip-address>` with your server's IP
 Lab 1 completed successfully.
 
     
+
 
