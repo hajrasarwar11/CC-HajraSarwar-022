@@ -1,0 +1,14 @@
+{
+  "name": "Gitea Devcontainer (Manual Docker Start)",
+  "dockerComposeFile": ["../compose.yaml"],
+  "service": "gitea",
+  "workspaceFolder": "/workspaces/CC-HajraSarwar-022",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [3000, 22, 5432],
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest"
+    }
+  },
+  "remoteUser": "vscode"
+}
