@@ -1,5 +1,38 @@
-.terraform/*
+# Terraform
+.terraform/
 *.tfstate
 *.tfstate.*
+crash.log
+debug.log
 *.tfvars
-*.pem
+*.tfvars.json
+
+# Editor and OS files
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# Ansible
+*.retry
+
+# Python
+__pycache__/
+*.pyc
+
+# VSCode
+.vscode/
+
+# Large files
+*.zip
+*.tar.gz
+*.tar
+*.gz
+*.bak
+*.tmp
+
+# Ignore provider binaries
+*.exe
+*.dll
+*.so
+*.dylib
