@@ -1,0 +1,3 @@
+aws_web-1_public_ip = "51.112.180.9"
+aws_web-2_public_ip = "3.28.204.85"
+webserver_public_ip = "3.29.63.209"
