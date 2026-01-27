@@ -1,0 +1,10 @@
+server {
+    listen 80;
+    server_name customer2.local;
+    root /var/www/customer2;
+    index index.php index.html;
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+    }
+}

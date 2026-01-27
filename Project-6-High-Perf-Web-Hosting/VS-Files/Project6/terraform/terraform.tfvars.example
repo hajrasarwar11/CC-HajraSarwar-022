@@ -1,0 +1,13 @@
+# Example tfvars for Project 6
+environment = "test"
+aws_region = "us-east-1"
+vpc_cidr = "10.0.0.0/16"
+public_subnet_cidrs = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnet_cidrs = ["10.0.11.0/24", "10.0.12.0/24"]
+azs = ["us-east-1a", "us-east-1b"]
+ami_id = "ami-xxxxxxxx"
+instance_type_lb = "t3.micro"
+instance_type_web = "t3.micro"
+web_instance_count = 2
+admin_cidr = "YOUR_ADMIN_IP/32"
+project = "project6"

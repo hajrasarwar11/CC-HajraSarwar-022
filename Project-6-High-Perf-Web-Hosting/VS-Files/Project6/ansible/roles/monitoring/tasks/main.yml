@@ -1,0 +1,20 @@
+- name: Ensure /var/log/site_checks.log exists and is writable
+	file:
+		path: /var/log/site_checks.log
+		state: touch
+		owner: root
+		group: root
+		mode: '0666'
+
+- name: Deploy check-site.sh script
+	copy:
+		src: check-site.sh
+		dest: /usr/local/bin/check-site.sh
+		mode: '0755'
+
+- name: Setup cron job for site monitoring
+	cron:
+		name: "Check sites HTTP status and response time"
+		job: "/usr/local/bin/check-site.sh"
+		minute: "*/5"
+		user: root

@@ -1,0 +1,14 @@
+plugin: aws_ec2
+regions:
+  - me-central-1
+filters:
+  tag:Project: project6
+keyed_groups:
+  - key: tags.Role
+    prefix: role
+    separator: "_"
+  - key: tags.Environment
+    prefix: env
+    separator: "_"
+compose:
+  ansible_host: public_ip_address

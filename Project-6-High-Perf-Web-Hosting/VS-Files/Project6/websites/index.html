@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Innovation & Security Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-bg {
+            background: url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+            height: 100vh;
+            position: relative;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(20, 30, 48, 0.7);
+            z-index: 1;
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: rgba(20, 30, 48, 0.85);
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 64px;
+        }
+        nav .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 32px;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        nav ul li a:hover {
+            color: #00c6fb;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            margin-top: 80px;
+        }
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .hero-buttons button {
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(90deg, #00c6fb 0%, #005bea 100%);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .hero-buttons button.secondary {
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+        }
+        .hero-buttons button:hover {
+            background: linear-gradient(90deg, #005bea 0%, #00c6fb 100%);
+            transform: translateY(-2px) scale(1.04);
+        }
+        section {
+            padding: 80px 0 60px 0;
+            background: #f7fafd;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.3rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #142030;
+        }
+        .features, .security {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: rgba(255,255,255,0.85);
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 28px;
+            width: 320px;
+            margin: 12px 0;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            backdrop-filter: blur(4px);
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 8px 32px rgba(0,198,251,0.15);
+        }
+        .card img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 18px;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #005bea;
+        }
+        .card p {
+            color: #333;
+            font-size: 1.05rem;
+        }
+        .about {
+            background: #eaf3fb;
+        }
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .about-content h3 {
+            color: #005bea;
+            margin-bottom: 10px;
+        }
+        .team-list {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .team-member {
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            font-weight: 600;
+            color: #142030;
+        }
+        .contact {
+            background: #f7fafd;
+            text-align: center;
+        }
+        .contact-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .contact-content h2 {
+            color: #142030;
+            margin-bottom: 10px;
+        }
+        .contact-content a {
+            color: #005bea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .social-icons {
+            margin: 18px 0 10px 0;
+        }
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 2rem;
+            color: #005bea;
+            transition: color 0.2s;
+        }
+        .social-icons a:hover {
+            color: #00c6fb;
+        }
+        .footer {
+            background: #142030;
+            color: #fff;
+            padding: 18px 0;
+            text-align: center;
+            font-size: 1rem;
+        }
+        @media (max-width: 900px) {
+            .features, .security, .team-list {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav {
+                padding: 0 10px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">CloudLab</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#security">Security</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="hero-bg" id="home">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>Cloud Innovation & Security Lab</h1>
+            <p>Futuristic Cloud Solutions, AI Integration, and Security Awareness for the Next Generation</p>
+            <div class="hero-buttons">
+                <button onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">Explore Innovation</button>
+                <button class="secondary" onclick="document.getElementById('security').scrollIntoView({behavior: 'smooth'})">Learn Security</button>
+            </div>
+        </div>
+    </div>
+    <section id="features">
+        <div class="section-title">Features</div>
+        <div class="features">
+            <div class="card">
+                <img src="https://img.icons8.com/fluency/96/cloud.png" alt="Live Cloud Status">
+                <h3>Live Cloud Status</h3>
+                <p>Monitor real-time status of major cloud providers and services, ensuring uptime and reliability for your applications.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="Trending Cloud Tech">
+                <h3>Trending Cloud Tech</h3>
+                <p>Stay updated with the latest trends in cloud computing, AI, and automation with curated news and insights.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/fluency/96/robot-2.png" alt="Interactive Demos">
+                <h3>Interactive Demos</h3>
+                <p>Experience hands-on cloud labs and AI-powered automation demos to boost your skills and knowledge.</p>
+            </div>
+        </div>
+    </section>
+    <section id="security">
+        <div class="section-title">Cloud Security Awareness</div>
+        <div class="security">
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/security-checked.png" alt="Security Tips">
+                <h3>Security Tips</h3>
+                <p>Learn best practices to secure your cloud infrastructure and protect your data from threats.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/news.png" alt="Latest News">
+                <h3>Latest News</h3>
+                <p>Get the latest updates on cloud security incidents, vulnerabilities, and industry news.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/quiz.png" alt="Interactive Quizzes">
+                <h3>Interactive Quizzes</h3>
+                <p>Test your knowledge with fun and challenging quizzes on cloud security and best practices.</p>
+            </div>
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/incident.png" alt="Incident Case Studies">
+                <h3>Incident Case Studies</h3>
+                <p>Explore real-world cloud security incidents and learn how to prevent similar issues.</p>
+            </div>
+        </div>
+    </section>
+    <section class="about" id="about">
+        <div class="section-title">About</div>
+        <div class="about-content">
+            <h3>Our Mission</h3>
+            <p>To empower individuals and organizations with cutting-edge cloud solutions and security knowledge, fostering innovation and resilience in the digital era.</p>
+            <h3 style="margin-top:40px;">Our Team</h3>
+            <div class="team-list">
+                <div class="team-member">Amina Noor</div>
+                <div class="team-member">Hajra Sarwar</div>
+                <div class="team-member">Hamail Fatima</div>
+            </div>
+        </div>
+    </section>
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2>Contact & Socials</h2>
+            <p>Email: <a href="mailto:cloudlab@example.com">cloudlab@example.com</a></p>
+            <div class="social-icons">
+                <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </section>
+    <div class="footer">
+        &copy; 2026 Cloud Innovation & Security Lab. All rights reserved.
+    </div>
+    <script>
+        // Smooth scroll for nav links
+        document.querySelectorAll('nav ul li a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({behavior: 'smooth'});
+                }
+            });
+        });
+    </script>
+</body>
+</html>

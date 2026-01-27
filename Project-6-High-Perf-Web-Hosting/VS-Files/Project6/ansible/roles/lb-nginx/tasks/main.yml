@@ -1,0 +1,59 @@
+---
+# Install Nginx and OpenSSL
+- name: Install Nginx and OpenSSL
+  yum:
+    name:
+      - nginx
+      - openssl
+    state: present
+    update_cache: yes
+
+# Generate self-signed SSL certificate
+- name: Create SSL directory
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+    mode: '0755'
+
+- name: Generate self-signed certificate
+  command: >
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048
+    -keyout /etc/nginx/ssl/nginx.key
+    -out /etc/nginx/ssl/nginx.crt
+    -subj "/CN=lb.local"
+  args:
+    creates: /etc/nginx/ssl/nginx.crt
+
+# Deploy Nginx config
+- name: Deploy Nginx LB config
+  template:
+    src: lb-nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    force: yes
+  notify: reload nginx
+
+# Test Nginx configuration
+- name: Test Nginx configuration
+  command: nginx -t
+  register: nginx_test
+  ignore_errors: yes
+
+- name: Show Nginx config test output
+  debug:
+    var: nginx_test.stderr
+
+- name: Show deployed nginx.conf
+  ansible.builtin.shell: cat /etc/nginx/nginx.conf
+  register: deployed_nginx_conf
+  changed_when: false
+
+- name: Print deployed nginx.conf
+  debug:
+    var: deployed_nginx_conf.stdout
+
+# Ensure Nginx is running
+- name: Ensure Nginx is running
+  service:
+    name: nginx
+    state: started
+    enabled: yes

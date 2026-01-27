@@ -1,0 +1,11 @@
+---
+- name: Add a new website to all web servers
+  hosts: role_web
+  become: yes
+  vars:
+    site_name: "{{ site_name }}"
+    server_name: "{{ server_name }}"
+    doc_root: "{{ doc_root }}"
+    enable_ssl: "{{ enable_ssl }}"
+  roles:
+    - websites

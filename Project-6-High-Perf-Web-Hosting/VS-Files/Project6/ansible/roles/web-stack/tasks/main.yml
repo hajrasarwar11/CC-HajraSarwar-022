@@ -1,0 +1,78 @@
+---
+# Install Nginx and PHP-FPM
+- name: Install Nginx and PHP-FPM
+  apt:
+    name:
+      - nginx
+      - php-fpm
+    state: present
+    update_cache: yes
+
+# Deploy Nginx config
+- name: Deploy Nginx config
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: reload nginx
+
+# Deploy PHP-FPM config
+- name: Deploy PHP-FPM config
+  template:
+    src: php-fpm.conf.j2
+    dest: /etc/php/7.4/fpm/php-fpm.conf
+  notify: reload php-fpm
+
+# Ensure Nginx is running
+- name: Ensure Nginx is running
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+# Ensure PHP-FPM is running
+- name: Ensure PHP-FPM is running
+  service:
+    name: php7.4-fpm
+    state: started
+    enabled: yes
+
+# Deploy server blocks for customer1, customer2, default
+- name: Deploy Nginx server block for customer1.local
+  template:
+    src: server_block_customer1.j2
+    dest: /etc/nginx/sites-available/customer1.local
+  notify: reload nginx
+
+- name: Deploy Nginx server block for customer2.local
+  template:
+    src: server_block_customer2.j2
+    dest: /etc/nginx/sites-available/customer2.local
+  notify: reload nginx
+
+- name: Deploy Nginx server block for default.local
+  template:
+    src: server_block_default.j2
+    dest: /etc/nginx/sites-available/default.local
+  notify: reload nginx
+
+# Enable server blocks
+- name: Enable customer1.local
+  file:
+    src: /etc/nginx/sites-available/customer1.local
+    dest: /etc/nginx/sites-enabled/customer1.local
+    state: link
+    force: yes
+
+- name: Enable customer2.local
+  file:
+    src: /etc/nginx/sites-available/customer2.local
+    dest: /etc/nginx/sites-enabled/customer2.local
+    state: link
+    force: yes
+
+- name: Enable default.local
+  file:
+    src: /etc/nginx/sites-available/default.local
+    dest: /etc/nginx/sites-enabled/default.local
+    state: link
+    force: yes

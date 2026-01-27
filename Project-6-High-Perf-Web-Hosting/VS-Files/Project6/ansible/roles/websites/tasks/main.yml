@@ -1,0 +1,40 @@
+- name: Install nginx
+  ansible.builtin.yum:
+    name: nginx
+    state: present
+  become: yes
+
+- name: Ensure nginx is started and enabled
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Create document root for the site
+  ansible.builtin.file:
+    path: "{{ doc_root }}"
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: '0755'
+
+- name: Deploy a beautiful index.html
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: "{{ doc_root }}/index.html"
+    owner: nginx
+    group: nginx
+    mode: '0644'
+
+- name: Configure nginx site
+  ansible.builtin.template:
+    src: nginx-site.conf.j2
+    dest: "/etc/nginx/conf.d/{{ site_name }}.conf"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Reload nginx
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
