@@ -1,0 +1,93 @@
+---
+- name: Configure Docker
+  hosts: all
+  become: true
+  tasks:
+    - name: install docker and update cache
+      yum:
+        name: docker
+        state: present
+        update_cache: yes
+
+- name: Install Docker Compose
+  hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+    - name: create docker cli-plugins directory
+      file:
+        path: /usr/local/lib/docker/cli-plugins
+        state: directory
+        mode: '0755'
+
+    - name: install docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/latest/download/docker-compose-linux-{{ lookup('pipe', 'uname -m') }}
+        dest: /usr/local/lib/docker/cli-plugins/docker-compose
+        mode: +x
+
+    - name: View architecture of the system
+      debug:
+        msg: "System architecture of {{ inventory_hostname }} is {{ ansible_facts['architecture'] }}"
+
+    - name: Alternate method to view architecture of the system
+      debug:
+        msg: "System architecture of {{inventory_hostname}} is {{ lookup('pipe', 'uname -m') }}"
+
+    - name: restart docker service
+      service:
+        name: docker
+        state: restarted
+
+- name: Adding user to docker group
+  hosts: all
+  become: true
+  vars_files:
+    - project-vars.yaml
+  tasks:
+    - name: add user to docker group
+      user:
+        name: "{{ normal_user }}"
+        groups: docker
+        append: yes
+
+    - name: reconnect to apply group changes
+      meta: reset_connection
+
+    - name: verify docker access
+      command: docker ps
+      register: docker_ps
+      changed_when: false
+
+    - name: display docker ps output
+      debug:
+        var: docker_ps.stdout
+
+    - name: fail if docker is not accessible
+      fail:
+        msg: "Docker is not accessible on this host"
+      when: docker_ps.rc != 0
+
+- name: Deploy Docker Containers
+  hosts: all
+  become: true
+  user: "{{ normal_user }}"
+  vars_files:
+    - project-vars.yaml
+  tasks:
+    - name: check if docker-compose file exists
+      stat:
+        path: /home/{{ normal_user }}/compose.yaml
+      register: compose_file
+
+    - name: copy docker-compose file
+      copy:
+        src: "{{ docker_compose_file_location }}/compose.yaml"
+        dest: /home/{{ normal_user }}/compose.yaml
+        mode: '0644'
+      when: not compose_file.stat.exists
+
+    - name: deploy containers using docker-compose
+      command: docker compose up -d
+      register: compose_result
+      changed_when: "'Creating' in compose_result.stdout or 'Recreating' in compose_result.stdout"

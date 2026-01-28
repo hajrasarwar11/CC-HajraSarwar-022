@@ -1,5 +1,6 @@
 # Terraform
 .terraform/
+.terraform.lock.hcl
 *.tfstate
 *.tfstate.*
 crash.log
@@ -36,3 +37,13 @@ __pycache__/
 *.dll
 *.so
 *.dylib
+
+# SSH Keys and Credentials
+*.pem
+id_ed25519
+id_ed25519.pub
+id_rsa
+id_rsa.pub
+.ssh/
+~/.aws/
+aws_credentials

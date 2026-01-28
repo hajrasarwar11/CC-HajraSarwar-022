@@ -1,0 +1,8 @@
+---
+- name: Deploy NGINX Web Stack with SSL and PHP
+  hosts: nginx
+  become: true
+  roles:
+    - nginx
+    - ssl
+    - webapp
